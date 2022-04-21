@@ -5,6 +5,32 @@ const FULL_HEART = '♥'
 // Your JavaScript code goes here!
 
 
+const likeButtons = Array.from(document.getElementsByClassName("like-glyph"));
+
+likeButtons.forEach(likeGlyph => likeGlyph.addEventListener("click", handleLike))
+
+function handleLike(e){
+const targetGlyph = e.target;
+mimicServerCall()
+.then( () => {
+  if(targetGlyph.innerText === EMPTY_HEART ){
+    targetGlyph.innerText = FULL_HEART
+    targetGlyph.className = "activated-heart"
+  }
+  else {
+    targetGlyph.innerText = EMPTY_HEART
+    targetGlyph.className = ""
+  }
+} )
+.catch(error => {
+const modal = document.querySelector("#modal")
+modal.className = ""  
+modal.innerText = error
+setTimeout(() => modal.className = "hidden", 3000 )
+})
+}
+
+
 
 
 //------------------------------------------------------------------------------
